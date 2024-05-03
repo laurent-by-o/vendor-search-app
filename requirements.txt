@@ -1,2 +1,5 @@
-Flask==1.1.2
+Flask==3.0.3
 gunicorn==20.0.4
+requests==2.25.1  # Check for the latest version that's compatible with your Python version
+beautifulsoup4==4.9.3  # Or the latest version
+# lxml==4.6.3  # Optional, if you choose to use lxml as the parser

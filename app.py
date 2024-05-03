@@ -3,20 +3,24 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from urllib.parse import urlparse, urljoin
+import os
 
 app = Flask(__name__)
 
-api_key = "AIzaSyDoAhSwV7wU_ufb80URcFfheKuZnZ3d7dM"  # Use your actual API key
-cse_id = "d35d69dd8032f4284"  # Your Custom Search Engine ID
+@app.route('/')
+def home():
+    return "This is the vendor search app"
 
 def google_search(query, num_results, api_key, cse_id):
+    api_key = os.getenv('GOOGLE_API_KEY')
+    cse_id = os.getenv('GOOGLE_CSE_ID')
     blacklist = ['eventbrite.com', 'reddit.com', 'tiktok.com', 'instagram.com',
                  'classpop.com', 'classbento.com', 'giftory.com', 'yelp.com','coursehorse.com']
     url = "https://www.googleapis.com/customsearch/v1"
     params = {
+        'key': api_key,
+        'cx': cse_id,
         'q': query,
-        'cx': "d35d69dd8032f4284",
-        'key': "AIzaSyDoAhSwV7wU_ufb80URcFfheKuZnZ3d7dM",
         'num': 10  # Maximum allowed per request by Google
     }
     urls = []
@@ -36,7 +40,6 @@ def google_search(query, num_results, api_key, cse_id):
                     return urls
         start += 10  # Proceed to the next set of results
     return urls
-
 
 def find_emails(url):
     subpages = ['', 'contact', 'contact-us', 'about', 'about-us']
@@ -61,9 +64,7 @@ def trigger_search():
     data = request.json
     query = data.get('query')
     num_results = data.get('num_results')
-    api_key = "YOUR_GOOGLE_API_KEY"  # Use environment variables or secure storage in production
-    cse_id = "YOUR_CUSTOM_SEARCH_ENGINE_ID"
-    
+ 
     # Perform the search
     if query and num_results:
         urls = google_search(query, num_results, api_key, cse_id)
@@ -76,4 +77,4 @@ def trigger_search():
         return jsonify({'error': 'Missing data'}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
