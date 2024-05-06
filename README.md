@@ -1,15 +1,15 @@
 The goal of this app is to find more vendors in less time.
 
 <b>How it works</b> <br>
-Send a slack message on #automation-vendor-search
-It will trigger a google search, and fetch the top 10 results
-It will look at every result website, and scrape several pages on this website for email addresses 
-It will retrieve one or more contact per url and send that back on slack
-The whole process generally takes less than a minute
+Send a slack message on #automation-vendor-search. <br>
+It will trigger a google search, and fetch the top 10 results. <br>
+It will look at every result website, and scrape several pages on this website for email addresses. <br>
+It will retrieve one or more contact per url and send that back on slack. <br>
+The whole process generally takes less than a minute. <br>
 
 <b>Notes</b><br>
-You can increase the # URLs looked at in Zapier, but it tends to time out
-Some websites are blacklisted: eventbrite, facebook, etc. 
+You can increase the # URLs looked at in Zapier, but it tends to time out. <br>
+Some websites are blacklisted: eventbrite, facebook, etc. <br>
 To investigate errors:
 Look at the zap run that errored
 For all details, look at the app logs 
